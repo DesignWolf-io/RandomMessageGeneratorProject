@@ -1,8 +1,7 @@
-// Random Quotes
-let startPhase = [];
-let middlePhase = [];
-let endPhase = [];
+// import { saveAs } from './FileSaver';
+const saveAs = require("fs")
 
+// Object containing all Phrases
 const randomQuotes = {
   startPhrase: [
     "If you let my daughter go now,",
@@ -37,12 +36,26 @@ const randomQuotes = {
   ],
 };
 
+// Randomize Phrase Function
 const randomizeQuote = (array) => {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-console.log(`
-  ${randomizeQuote(randomQuotes.startPhrase)} 
-    ${randomizeQuote(randomQuotes.middlePhrase)} 
-    ${randomizeQuote(randomQuotes.endPhrase)}
-`);
+// Random phrase container variable
+let randomSentence = `${randomizeQuote(randomQuotes.startPhrase)} ${randomizeQuote(randomQuotes.middlePhrase)} ${randomizeQuote(randomQuotes.endPhrase)}`
+
+// Export to console or to text file at script location
+const exportQuote = (wantsFile) => {
+  if (wantsFile == false){
+    console.log(randomSentence);
+  } else if (wantsFile == true) {
+    saveAs.writeFile(`randomSentenceOutput.txt`, randomSentence, (err) => {  
+      // In case of a error throw err.
+      if (err) throw err;
+  });
+  };
+}
+
+exportQuote(true);
+
+
